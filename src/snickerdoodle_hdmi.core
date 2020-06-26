@@ -1,0 +1,35 @@
+CAPI=2:
+name : ::snickerdoodle_hdmi
+description : hdmi setup
+
+filesets:
+  rtl:
+    depend:
+      - HDMI_Tx
+      - litex_mmcm_drp
+      - dma_axi_in_axis_out
+      - axi_dispctrl
+    files:
+      - clock_crossing.v : {file_type : verilogSource}
+      - hdmi_top.vhd : {file_type : vhdlSource}
+      - snickerdoodle.xdc : {file_type : xdc}
+      - snickerdoodle-bd.tcl : {file_type : tclSource}
+
+targets:
+  default:
+    default_tool : vivado
+    filesets : [rtl]
+    hooks:
+      pre_build : [ip_repo, update, source_mgmt_mode]
+    tools:
+      vivado:
+        part : xc7z020clg400-3
+    toplevel : hdmi_top
+
+scripts:
+  ip_repo:
+    cmd : [sed, -i, '0,/set_property/!b;//a\set_property ip_repo_paths ../src [current_project]', snickerdoodle_hdmi_0.tcl]
+  update:
+    cmd : [sed, -i, '0,/ip_repo/!b;//a\update_ip_catalog -rebuild', snickerdoodle_hdmi_0.tcl]
+  source_mgmt_mode:
+    cmd : [sed, -i, 's/source_mgmt_mode None/source_mgmt_mode All/g', snickerdoodle_hdmi_0.tcl]
