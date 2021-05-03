@@ -1,6 +1,8 @@
 HDMI on Snickerdoodle
 =====================
 
+Copyright (c) 2020-2021 [Antmicro](https://www.antmicro.com)
+
 This is an example design for the open hardware [Snickerdoodle HDMI breakout board](https://github.com/antmicro/snickerdoodle-hdmi-breakout).
 The design utilizes the following IP cores:
 
